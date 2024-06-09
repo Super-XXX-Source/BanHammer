@@ -1,0 +1,211 @@
+
+--Anti detection
+if getgenv then
+_G = getgenv()
+else
+_G = {}
+end
+--CREDITS: Nerdv2(idea), Secment(scripting), Jimbo named jimbo(ui)
+--Etc
+_G.Tool = 'name'
+_G.TRP = false
+--sounds: Swim, Jump, Splash, None
+_G.BonkS='Jump'
+_G.Ls='Swim'
+_G.Rs='Swim'
+_G.Equip='None'
+_G.Unequip='None'
+--vars
+if cloneref then
+else
+cloneref=function(x) return x end
+end
+game=cloneref(game)
+SoundService = cloneref(game:GetService("SoundService"))
+CoreGui = cloneref(game:GetService('CoreGui'))
+--Functions (ignore)
+_G.a={}
+function play(id)
+local h = cloneref(game.NetworkClient).ClientReplicator:GetPlayer().Character.Humanoid
+local a = Instance.new('Animation')
+a.AnimationId = 'rbxassetid://'..tostring(id)
+loade = h:LoadAnimation(a)
+loade:Play()
+return loade
+end
+
+function d(x) 
+  local Players={}
+Players.LocalPlayer=game.NetworkClient.ClientReplicator:GetPlayer()
+if string.lower(x) == 'swim' and game.GameId ~= (4807308814 or 66654135) then
+Players.LocalPlayer.Character.Humanoid:ChangeState(4)
+elseif string.lower(x) == 'jump' and game.GameId ~= (4807308814 or 66654135) then
+
+Players.LocalPlayer.Character.Humanoid.JumpPower = 0.00001
+Players.LocalPlayer.Character.Humanoid.Jump = true
+wait() Players.LocalPlayer.Character.Humanoid.JumpPower = jmppower
+    elseif string.lower(x) == 'splash' and game.GameId ~= (4807308814 or 66654135) then
+    Players.LocalPlayer.Character.Humanoid.JumpPower = 0.00001
+    Players.LocalPlayer.Character.Humanoid:ChangeState(4)
+    Players.LocalPlayer.Character.Humanoid.Jump = true
+    wait() Players.LocalPlayer.Character.Humanoid.JumpPower = jmppower
+end
+end
+function Idle()
+_G.a.Idle = play(1296867556)
+end
+function IdleStop()
+_G.a.Idle:Stop()
+end
+function RSlash()
+_G.a.RSlash = play(2410679501)
+end
+function LSlash()
+_G.a.LSlash = play(846744780)
+end
+function Bonk()
+_G.a.Bonk = play(846754447)
+end
+eq=false
+function kill(p)
+if SoundService.RespectFilteringEnabled == false and eq == true then
+if p.Parent:FindFirstChild('Humanoid') then
+p.Parent.HumanoidRootPart.Died:Play()
+    end
+eq = false
+    end 
+end
+t = 1
+function at()
+if t == 1 then
+t=t+1
+task.spawn(d, _G.Ls)
+RSlash()
+elseif t == 2 then
+t=t+1
+task.spawn(d, _G.Rs)
+LSlash()
+elseif t == 3 then
+t = 1
+task.spawn(d, _G.BonkS)
+Bonk()
+end
+end
+--UI
+-- Version: 3.6
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local bonk = Instance.new("ImageButton")
+local UICorner = Instance.new("UICorner")
+local right = Instance.new("ImageButton")
+local UICorner_2 = Instance.new("UICorner")
+local left = Instance.new("ImageButton")
+local UICorner_3 = Instance.new("UICorner")
+
+-- Properties:
+
+ScreenGui.Parent = cloneref(game.CoreGui)
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.833068073, 0, 0.667413712, 0)
+Frame.Size = UDim2.new(0, 209, 0, 53)
+Frame.Visible=false
+
+bonk.Name = "bonk"
+bonk.Parent = Frame
+bonk.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+bonk.BorderColor3 = Color3.fromRGB(0, 0, 0)
+bonk.BorderSizePixel = 0
+bonk.Position = UDim2.new(0.0074018999, 0, -0.0175096039, 0)
+bonk.Size = UDim2.new(0, 50, 0, 50)
+bonk.Image = "rbxassetid://13404293333"
+bonk.ScaleType = Enum.ScaleType.Fit
+UICorner.Parent = bonk
+bonk.MouseButton1Click:Connect(function()
+Bonk()
+    end)
+right.Name = "right"
+right.Parent = Frame
+right.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+right.BorderColor3 = Color3.fromRGB(0, 0, 0)
+right.BorderSizePixel = 0
+right.Position = UDim2.new(0.00573321618, 0, 1.62264097, 0)
+right.Size = UDim2.new(0, 50, 0, 50)
+right.Image = "http://www.roblox.com/asset/?id=14894221972"
+right.ScaleType = Enum.ScaleType.Fit
+right.MouseButton1Click:Connect(function()
+RSlash()
+    end)
+UICorner_2.CornerRadius = UDim.new(0, 80)
+UICorner_2.Parent = right
+
+left.Name = "left"
+left.Parent = Frame
+left.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+left.BorderColor3 = Color3.fromRGB(0, 0, 0)
+left.BorderSizePixel = 0
+left.Position = UDim2.new(0.382924646, 0, -0.0188679248, 0)
+left.Size = UDim2.new(0, 50, 0, 50)
+left.Image = "http://www.roblox.com/asset/?id=17462249192"
+left.ScaleType = Enum.ScaleType.Fit
+left.MouseButton1Click:Connect(function()
+        LSlash() --i just remembered i didnt even need to add function() for this :sob:
+    end)
+UICorner_3.CornerRadius = UDim.new(0, 60)
+UICorner_3.Parent = left
+function open()
+Frame.Visible=true
+end
+function close()
+Frame.Visible=false
+end
+--Main
+function tl()
+plr = cloneref(game.NetworkClient).ClientReplicator:GetPlayer() --kick detection
+T=Instance.new('Tool')
+T.Parent = plr.Backpack --lag optimization because the second Instance.new option is known to cause more lag source: secment (me)
+T.Name = 'Hammer'
+H=Instance.new('Part')
+H.Parent = T
+H.Name = 'Handle'
+H.Touched:Connect(function(v) task.spawn(kill, v) end)
+H.Transparency = 1
+if _G.TRP==true then
+Ham = (plr.Character:FindFirstChild(_G.Tool) or plr.character:FindFirstChild('Accessory_'.._G.Tool))
+Ham.Parent = nil
+else
+Ham = Instance.new('Part')
+Ham.Transparency = 1
+end
+T.Activated:Connect(function(c) task.spawn(at, c) eq=true end)
+T.Equipped:Connect(function()
+            open()
+enabled = true
+task.spawn(d, _G.Equip)
+Idle()
+task.spawn(function()
+Ham.Parent = plr.Character
+  end)
+end)
+T.Unequipped:Connect(function()
+            close()
+enabled = false
+task.spawn(d, _G.Unequip)
+IdleStop()
+task.spawn(function()
+Ham.Parent = plr.Character
+      end)
+end)
+end
+tl()
+cloneref(game.NetworkClient).ClientReplicator:GetPlayer().CharacterAdded:Connect(function(v)
+        repeat wait() until v:FindFirstChild('Humanoid') 
+tl()
+    
+    end)
